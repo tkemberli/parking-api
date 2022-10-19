@@ -1,19 +1,18 @@
 package com.tk.parkingapi;
 
-import com.tk.parkingapi.entity.Car;
-import com.tk.parkingapi.factory.CarFactory;
+import com.tk.parkingapi.factory.VehicleFactory;
 import lombok.val;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CarFactoryTests {
+public class VehicleFactoryTests {
 
-    private CarFactory factory;
+    private VehicleFactory factory;
 
     @BeforeEach
     private void initialize(){
-        factory = new CarFactory();
+        factory = new VehicleFactory();
     }
 
     @Test

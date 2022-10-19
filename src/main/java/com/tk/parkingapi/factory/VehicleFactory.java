@@ -1,7 +1,7 @@
 package com.tk.parkingapi.factory;
 
 import com.tk.parkingapi.ParkingApiApplication;
-import com.tk.parkingapi.entity.Car;
+import com.tk.parkingapi.entity.Vehicle;
 import lombok.val;
 
 import java.io.IOException;
@@ -13,11 +13,11 @@ import java.util.concurrent.ThreadLocalRandom;
 * A factory that builds random Cars for testing purposes
  */
 
-public class CarFactory {
+public class VehicleFactory {
 
     private final Properties attributes;
 
-    public CarFactory(){
+    public VehicleFactory(){
         this.attributes = new Properties();
 
         val propertiesFilePath = "/car.attributes.properties";
@@ -38,7 +38,7 @@ public class CarFactory {
 
     }
 
-    public Car buildCar(){
+    public Vehicle buildCar(){
         String id = getUUID();
 
         String state = getRandomAttribute("car.states");
@@ -50,7 +50,7 @@ public class CarFactory {
 
         String ownerID = getUUID().substring(0, 17);
 
-        return new Car(
+        return new Vehicle(
                 id,
                 plate,
                 model,

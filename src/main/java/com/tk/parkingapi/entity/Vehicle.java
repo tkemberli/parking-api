@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Car {
+public class Vehicle {
 
     @Id
     private String id;
