@@ -6,32 +6,21 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "vehicle")
+@Table(name = "parking_history")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Vehicle {
+public class ParkingHistory {
 
-    @Id
-    @Column(name = "id")
-    private String id;
+    @Column(name = "parking_space_id")
+    private int parkingSpaceId;
 
-    @Column(name = "plate")
-    private String plate;
-
-    @Column(name = "model")
-    private String model;
-
-    @Column(name = "color")
-    private String color;
-
-    @Column(name = "owner_id")
-    private String ownerId;
+    @Column(name = "vehicle_plate")
+    private String vehiclePlate;
 
     @Column(name = "entry_date")
     private LocalDateTime entryDate;
@@ -40,5 +29,5 @@ public class Vehicle {
     private LocalDateTime exitDate;
 
     @Column(name = "bill")
-    private Double bill;
+    private double bill;
 }
