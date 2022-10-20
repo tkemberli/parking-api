@@ -15,7 +15,7 @@ public class ParkingSpace {
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
+    @JoinColumn(name = "vehicle_plate", referencedColumnName = "plate")
     private Vehicle vehicle;
 
     public boolean isEmpty(){

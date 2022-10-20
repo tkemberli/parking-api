@@ -56,7 +56,6 @@ public class VehicleFactory {
         LocalDateTime entryDate = LocalDateTime.now();
 
         return new Vehicle(
-                id,
                 plate,
                 model,
                 color,

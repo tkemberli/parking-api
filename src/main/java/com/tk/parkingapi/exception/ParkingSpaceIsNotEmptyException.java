@@ -10,6 +10,6 @@ public class ParkingSpaceIsNotEmptyException extends RuntimeException{
     public ParkingSpaceIsNotEmptyException(ParkingSpace space) {
 
         super("The parking space of id " + space.getId() +
-                " is already occupied by the vehicle of id " + space.getVehicle().getId());
+                " is already occupied by the vehicle of plate " + space.getVehicle().getPlate());
     }
 }
