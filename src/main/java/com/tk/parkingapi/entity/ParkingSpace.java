@@ -14,11 +14,11 @@ public class ParkingSpace {
     @Column(name = "id")
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
-    private Vehicle car;
+    private Vehicle vehicle;
 
     public boolean isEmpty(){
-        return this.car == null;
+        return this.vehicle == null;
     }
 }

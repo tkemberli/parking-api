@@ -17,7 +17,7 @@ public class VehicleFactoryTests {
 
     @Test
     public void shouldBuildWithAllProperties(){
-        val car = factory.buildCar();
+        val car = factory.build();
         Assert.assertNotNull(car.getId());
         Assert.assertNotNull(car.getPlate());
         Assert.assertNotNull(car.getModel());

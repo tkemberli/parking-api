@@ -3,8 +3,8 @@
 USE parking;
 
 CREATE TABLE vehicle(
-	id CHAR(12) PRIMARY KEY,
-    plate CHAR(15) UNIQUE NOT NULL,
+	id VARCHAR(50) PRIMARY KEY,
+    plate VARCHAR(50) UNIQUE NOT NULL,
     model VARCHAR(10) NOT NULL,
     color VARCHAR(10) NOT NULL,
     owner_id CHAR(17) NOT NULL,
@@ -15,14 +15,14 @@ CREATE TABLE vehicle(
 
 CREATE TABLE parking_space(
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    vehicle_id CHAR(12) DEFAULT NULL,
+    vehicle_id VARCHAR(50) DEFAULT NULL,
     CONSTRAINT `fk_vehicle_id` FOREIGN KEY (vehicle_id) REFERENCES vehicle(id)
 );
 
 CREATE TABLE parking_history(
     id INT PRIMARY KEY AUTO_INCREMENT,
 	parking_space_id INT NOT NULL,
-    vehicle_plate CHAR(15) NOT NULL,
+    vehicle_plate VARCHAR(50) NOT NULL,
     entry_date DATETIME NOT NULL,
     exit_date DATETIME NOT NULL,
     bill DOUBLE NOT NULL

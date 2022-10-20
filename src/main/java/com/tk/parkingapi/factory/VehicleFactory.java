@@ -3,9 +3,9 @@ package com.tk.parkingapi.factory;
 import com.tk.parkingapi.ParkingApiApplication;
 import com.tk.parkingapi.entity.Vehicle;
 import lombok.val;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Properties;
 import java.util.UUID;
@@ -15,6 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 * A factory that builds random Cars for testing purposes
  */
 
+@Component
 public class VehicleFactory {
 
     private final Properties attributes;
@@ -40,7 +41,7 @@ public class VehicleFactory {
 
     }
 
-    public Vehicle buildCar(){
+    public Vehicle build(){
         String id = getUUID();
 
         String state = getRandomAttribute("car.states");

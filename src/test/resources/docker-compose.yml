@@ -1,9 +1,0 @@
-version: '3.1'
-services:
-  db:
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: parking
-      MYSQL_DATABASE: parking
-    ports:
-      - "3306:3306"
