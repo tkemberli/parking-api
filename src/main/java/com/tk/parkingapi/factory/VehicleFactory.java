@@ -5,6 +5,8 @@ import com.tk.parkingapi.entity.Vehicle;
 import lombok.val;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -50,12 +52,17 @@ public class VehicleFactory {
 
         String ownerID = getUUID().substring(0, 17);
 
+        LocalDateTime entryDate = LocalDateTime.now();
+
         return new Vehicle(
                 id,
                 plate,
                 model,
                 color,
-                ownerID
+                ownerID,
+                entryDate,
+                null,
+                0.0d
         );
     }
 
