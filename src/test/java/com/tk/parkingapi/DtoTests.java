@@ -26,14 +26,16 @@ public class DtoTests extends CleanDatabaseContainer {
         val space = service.parkVehicle(vehicle);
         val dto = ParkingDTOMapper.parkingSpaceToDto(space);
 
-        Assert.assertEquals(space.getId(), dto.parkingSpotId());
-        Assert.assertEquals(space.getVehicle().getPlate(), dto.vehiclePlate());
-        Assert.assertEquals(space.getVehicle().getModel(), dto.vehicleModel());
-        Assert.assertEquals(space.getVehicle().getColor(), dto.vehicleColor());
-        Assert.assertEquals(space.getVehicle().getOwnerId(), dto.ownerId());
-        Assert.assertEquals(space.getVehicle().getEntryDate(), dto.entryDate());
-        Assert.assertEquals(space.getVehicle().getExitDate(), dto.exitDate());
-        Assert.assertEquals(space.getVehicle().getBill(), dto.bill());
+        System.out.println(dto);
+
+        Assert.assertEquals(space.getId(), dto.getId());
+        Assert.assertEquals(space.getVehicle().getPlate(), dto.getVehiclePlate());
+        Assert.assertEquals(space.getVehicle().getModel(), dto.getVehicleModel());
+        Assert.assertEquals(space.getVehicle().getColor(), dto.getVehicleColor());
+        Assert.assertEquals(space.getVehicle().getOwnerId(), dto.getVehicleOwnerId());
+        Assert.assertEquals(space.getVehicle().getEntryDate(), dto.getVehicleEntryDate());
+        Assert.assertEquals(space.getVehicle().getExitDate(), dto.getVehicleExitDate());
+        Assert.assertEquals(space.getVehicle().getBill(), dto.getVehicleBill());
     }
 
     @Test
@@ -41,6 +43,6 @@ public class DtoTests extends CleanDatabaseContainer {
         val space = service.findOneEmpty();
         val dto = ParkingDTOMapper.parkingSpaceToDto(space);
 
-        Assert.assertNull(dto.vehicleModel());
+        Assert.assertNull(dto.getVehicleModel());
     }
 }

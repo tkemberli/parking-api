@@ -2,34 +2,12 @@ package com.tk.parkingapi.mapper;
 
 import com.tk.parkingapi.dto.ParkingDTO;
 import com.tk.parkingapi.entity.ParkingSpace;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 public abstract class ParkingDTOMapper {
-
+    private static final ModelMapper MODEL_MAPPER = new ModelMapper();
     public static ParkingDTO parkingSpaceToDto(ParkingSpace parkingSpace){
-
-        if(parkingSpace.getVehicle() == null) {
-            return new ParkingDTO(
-                    parkingSpace.getId(),
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-            );
-        }
-
-        return new ParkingDTO(
-                parkingSpace.getId(),
-                parkingSpace.getVehicle().getPlate(),
-                parkingSpace.getVehicle().getModel(),
-                parkingSpace.getVehicle().getColor(),
-                parkingSpace.getVehicle().getOwnerId(),
-                parkingSpace.getVehicle().getEntryDate(),
-                parkingSpace.getVehicle().getExitDate(),
-                parkingSpace.getVehicle().getBill()
-        );
+        return MODEL_MAPPER.map(parkingSpace, ParkingDTO.class);
     }
 }

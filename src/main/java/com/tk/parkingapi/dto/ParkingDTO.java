@@ -1,15 +1,22 @@
 package com.tk.parkingapi.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
-public record ParkingDTO(
-        int parkingSpotId,
-        String vehiclePlate,
-        String vehicleModel,
-        String vehicleColor,
-        String ownerId,
-        LocalDateTime entryDate,
-        LocalDateTime exitDate,
-        Double bill
-){}
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
+@NoArgsConstructor
+public class ParkingDTO {
+    int id;
+    String vehiclePlate;
+    String vehicleModel;
+    String vehicleColor;
+    String vehicleOwnerId;
+    LocalDateTime vehicleEntryDate;
+    LocalDateTime vehicleExitDate;
+    Double vehicleBill;
+}
