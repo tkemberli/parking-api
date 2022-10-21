@@ -1,9 +1,8 @@
 package com.tk.parkingapi;
 
 import com.tk.parkingapi.containers.CleanDatabaseContainer;
-import com.tk.parkingapi.exception.NoEmptyParkingSpaceFoundException;
-import com.tk.parkingapi.exception.ParkingSpaceEmptyException;
-import com.tk.parkingapi.exception.ParkingSpaceIsNotEmptyException;
+import com.tk.parkingapi.exception.GenericConflictException;
+import com.tk.parkingapi.exception.GenericNotFoundException;
 import com.tk.parkingapi.factory.VehicleFactory;
 import com.tk.parkingapi.service.ParkingSpaceService;
 import lombok.val;
@@ -29,7 +28,7 @@ public class ParkingSpaceServiceTests extends CleanDatabaseContainer {
         spaces.forEach(space -> {
             try{
                 parkingSpaceService.unParkVehicle(space.getId());
-            } catch (ParkingSpaceEmptyException exception){}
+            } catch (Exception exception){}
         });
     }
 
@@ -49,10 +48,10 @@ public class ParkingSpaceServiceTests extends CleanDatabaseContainer {
             parkingSpaceService.parkVehicle(vehicle);
         });
 
-        Assert.assertThrows(NoEmptyParkingSpaceFoundException.class,
+        Assert.assertThrows(GenericNotFoundException.class,
                 () -> parkingSpaceService.findOneEmpty());
 
-        Assert.assertThrows(NoEmptyParkingSpaceFoundException.class,
+        Assert.assertThrows(GenericNotFoundException.class,
                 () -> parkingSpaceService.findAllEmpty());
 
         unParkAllVehicles();
@@ -61,7 +60,7 @@ public class ParkingSpaceServiceTests extends CleanDatabaseContainer {
     @Test
     public void whenUnParkingAnEmptySpaceShouldTrowException(){
         val space = parkingSpaceService.findOneEmpty();
-        Assert.assertThrows(ParkingSpaceEmptyException.class,
+        Assert.assertThrows(GenericNotFoundException.class,
                 () -> parkingSpaceService.unParkVehicle(space.getId()));
     }
 
@@ -88,7 +87,7 @@ public class ParkingSpaceServiceTests extends CleanDatabaseContainer {
 
         parkingSpaceService.parkVehicleAt(vehicle, firstEmptySpaceID);
 
-        Assert.assertThrows(ParkingSpaceIsNotEmptyException.class,
+        Assert.assertThrows(GenericConflictException.class,
                 () -> parkingSpaceService.parkVehicleAt(anotherVehicle, firstEmptySpaceID));
     }
 

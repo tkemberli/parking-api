@@ -6,6 +6,7 @@ import com.tk.parkingapi.exception.*;
 import com.tk.parkingapi.repository.ParkingSpaceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,10 +20,9 @@ public class ParkingSpaceService {
 
     @Transactional
     public ParkingSpace find(int id){
-        val space = repository.findById(id);
-        if(space.isEmpty()) throw new ParkingSpaceNotFoundException(id);
+        return repository.findById(id)
+                .orElseThrow(() -> new GenericNotFoundException("No space exists with id " + id));
 
-        return space.get();
     }
     @Transactional
     public List<ParkingSpace> findAll(){
@@ -31,13 +31,14 @@ public class ParkingSpaceService {
 
     @Transactional
     public List<ParkingSpace> findAllEmpty(){
-        val parkingSpaces = repository.findByVehicleIsNull();
+        val list = repository.findByVehicleIsNull();
 
-        if(parkingSpaces.isEmpty()) throw new NoEmptyParkingSpaceFoundException();
+        if(list.isEmpty()) throw new GenericNotFoundException("There are no empty parking spaces");
 
-        return parkingSpaces;
+        return list;
+
     }
-
+    
     @Transactional
     public ParkingSpace findOneEmpty(){
         return findAllEmpty().get(0);
@@ -53,12 +54,13 @@ public class ParkingSpaceService {
     }
 
     // TODO: Calculate the bill
+    // TODO: Save log
     @Transactional
     public Vehicle unParkVehicle(int parkingSpaceID){
         val space = find(parkingSpaceID);
         val vehicle = space.getVehicle();
 
-        if(vehicle == null) throw new ParkingSpaceEmptyException(parkingSpaceID);
+        if(vehicle == null) throw new GenericNotFoundException("The space " + parkingSpaceID + " is empty");
 
         space.setVehicle(null);
         return vehicle;
@@ -67,18 +69,16 @@ public class ParkingSpaceService {
 
     @Transactional
     public ParkingSpace findByParkedVehiclePlate(String vehiclePlate){
-        val space = repository.findByVehiclePlate(vehiclePlate);
+        return repository.findByVehiclePlate(vehiclePlate)
+                .orElseThrow(() -> new GenericNotFoundException("There is no parked vehicle by plate " + vehiclePlate));
 
-        if(space.isEmpty()) throw new VehicleNotFoundException(vehiclePlate);
-
-        return space.get();
     }
 
     @Transactional
     public ParkingSpace parkVehicleAt(Vehicle vehicle, int parkingSpaceId){
         val space = this.find(parkingSpaceId);
 
-        if(!space.isEmpty()) throw new ParkingSpaceIsNotEmptyException(space);
+        if(!space.isEmpty()) throw new GenericConflictException("The parking space " + space.getId() + " is already occupied by the vehicle of plate " + space.getVehicle().getPlate());
 
         space.setVehicle(vehicle);
 
