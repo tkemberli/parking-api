@@ -24,6 +24,11 @@ public class ParkingSpaceService {
                 .orElseThrow(() -> new GenericNotFoundException("No space exists with id " + id));
 
     }
+
+    @Transactional
+    public void save(ParkingSpace space) {
+        repository.save(space);
+    }
     @Transactional
     public List<ParkingSpace> findAll(){
         return repository.findAll();
@@ -38,7 +43,7 @@ public class ParkingSpaceService {
         return list;
 
     }
-    
+
     @Transactional
     public ParkingSpace findOneEmpty(){
         return findAllEmpty().get(0);

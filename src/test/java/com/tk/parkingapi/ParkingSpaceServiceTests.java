@@ -7,6 +7,7 @@ import com.tk.parkingapi.factory.VehicleFactory;
 import com.tk.parkingapi.service.ParkingSpaceService;
 import lombok.val;
 import org.junit.Assert;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,9 @@ public class ParkingSpaceServiceTests extends CleanDatabaseContainer {
     @Autowired
     private VehicleFactory vehicleFactory;
 
-    // Not putting this on a @AfterAll annotation, since that would make the method need to be static
-    // and a static method can't use the parkingSpaceService declared above
-    public void unParkAllVehicles(){
-        val spaces = parkingSpaceService.findAll();
-        spaces.forEach(space -> {
-            try{
-                parkingSpaceService.unParkVehicle(space.getId());
-            } catch (Exception exception){}
-        });
-    }
+    @Autowired
+    private TestUtils testUtils;
+
 
     @Test
     public void allStartingSpacesShouldBeEmpty(){
@@ -54,7 +48,7 @@ public class ParkingSpaceServiceTests extends CleanDatabaseContainer {
         Assert.assertThrows(GenericNotFoundException.class,
                 () -> parkingSpaceService.findAllEmpty());
 
-        unParkAllVehicles();
+        testUtils.unParkAllVehicles();
     }
 
     @Test
@@ -102,7 +96,7 @@ public class ParkingSpaceServiceTests extends CleanDatabaseContainer {
 
         Assert.assertEquals(initialSpaceQty, endingSpaceQty);
 
-        unParkAllVehicles();
+        testUtils.unParkAllVehicles();
     }
 
 }
