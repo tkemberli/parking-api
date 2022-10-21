@@ -5,9 +5,15 @@ import com.tk.parkingapi.entity.ParkingSpace;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 public abstract class ParkingDTOMapper {
     private static final ModelMapper MODEL_MAPPER = new ModelMapper();
     public static ParkingDTO parkingSpaceToDto(ParkingSpace parkingSpace){
         return MODEL_MAPPER.map(parkingSpace, ParkingDTO.class);
+    }
+
+    public static List<ParkingDTO> parkingSpaceToDto(List<ParkingSpace> parkingSpaces){
+        return parkingSpaces.stream().map(ParkingDTOMapper::parkingSpaceToDto).toList();
     }
 }
