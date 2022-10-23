@@ -4,6 +4,7 @@ import com.tk.parkingapi.dto.ParkingDTO;
 import com.tk.parkingapi.dto.VehicleDTO;
 import com.tk.parkingapi.entity.ParkingSpace;
 import com.tk.parkingapi.exception.GenericConflictException;
+import com.tk.parkingapi.exception.GenericNotFoundException;
 import com.tk.parkingapi.mapper.ParkingDTOMapper;
 import com.tk.parkingapi.service.ParkingSpaceService;
 import io.swagger.annotations.Api;
@@ -63,6 +64,36 @@ public class ParkingController {
         return ResponseEntity.status(HttpStatus.OK).body(spaceDTO);
     }
 
+    @ApiOperation("Unpark a vehicle from a space, by space ID")
+    @PatchMapping("/unpark/{spaceId}")
+    public ResponseEntity<VehicleDTO> unparkVehicle(@PathVariable int spaceId) {
+        val space = service.find(spaceId);
+
+        // TODO: Return an vehicle optional?
+        val vehicle = space.getVehicle();
+
+        if(vehicle == null) throw new GenericNotFoundException("There is no vehicle parked in the spot " + spaceId);
+
+        space.setVehicle(null);
+
+        service.save(space);
+
+        val vehicleDTO = ParkingDTOMapper.vehicleToDTO(vehicle);
+
+        return ResponseEntity.status(HttpStatus.OK).body(vehicleDTO);
+    }
+
+    @ApiOperation("Unpark a vehicle from a space, by vehicle plate")
+    @PatchMapping("/unpark/vehicle/{vehiclePlate}")
+    public ResponseEntity<VehicleDTO> unParkVehicle(@PathVariable String vehiclePlate) {
+        val vehicle = service.unParkVehicle(vehiclePlate);
+
+        val vehicleDTO = ParkingDTOMapper.vehicleToDTO(vehicle);
+
+        return ResponseEntity.status(HttpStatus.OK).body(vehicleDTO);
+    }
+
+    // TODO: I may be confusing the controller and service responsibilities
     private ParkingDTO parkVehicleAt(VehicleDTO vehicleDTO, ParkingSpace space) {
         val vehicle = ParkingDTOMapper.dtoToVehicle(vehicleDTO);
 
@@ -77,4 +108,5 @@ public class ParkingController {
 
         return spaceDTO;
     }
+
 }

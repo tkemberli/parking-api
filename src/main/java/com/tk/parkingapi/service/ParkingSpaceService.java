@@ -68,8 +68,22 @@ public class ParkingSpaceService {
         if(vehicle == null) throw new GenericNotFoundException("The space " + parkingSpaceID + " is empty");
 
         space.setVehicle(null);
+        repository.save(space);
+
         return vehicle;
 
+    }
+    // TODO: DRY
+    public Vehicle unParkVehicle(String vehiclePlate) {
+        val space = findByParkedVehiclePlate(vehiclePlate);
+        val vehicle = space.getVehicle();
+
+        if(vehicle == null) throw new GenericNotFoundException("The space " + space.getId() + " is empty");
+
+        space.setVehicle(null);
+        repository.save(space);
+
+        return vehicle;
     }
 
     @Transactional
