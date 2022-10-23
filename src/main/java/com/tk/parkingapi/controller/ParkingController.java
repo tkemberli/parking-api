@@ -26,7 +26,7 @@ public class ParkingController {
     private final ParkingSpaceService service;
 
     @ApiOperation("Get all parking spaces")
-    @GetMapping
+    @GetMapping("/space")
     public ResponseEntity<List<ParkingDTO>> findAll(){
         val list = service.findAll();
         val dtoList = ParkingDTOMapper.parkingSpaceToDto(list);
@@ -35,7 +35,7 @@ public class ParkingController {
     }
 
     @ApiOperation("Get all empty parking spaces")
-    @GetMapping("/empty")
+    @GetMapping("/space/empty")
     public ResponseEntity<List<ParkingDTO>> findAllEmpty(){
         val list = service.findAllEmpty();
         val dtoList = ParkingDTOMapper.parkingSpaceToDto(list);
@@ -44,9 +44,9 @@ public class ParkingController {
     }
 
     @ApiOperation("Get a specific parking space by space ID")
-    @GetMapping("/{id}")
-    public ResponseEntity<ParkingDTO> findById(@PathVariable int id){
-        val space = service.find(id);
+    @GetMapping("/space/{spaceId}")
+    public ResponseEntity<ParkingDTO> findById(@PathVariable int spaceId){
+        val space = service.find(spaceId);
         val spaceDTO = ParkingDTOMapper.parkingSpaceToDto(space);
 
         return ResponseEntity.ok(spaceDTO);

@@ -38,7 +38,7 @@ public class RestTests extends CleanDatabaseContainer {
     @Test
     public void whenFindAllThenOk(){
         RestAssured
-                .when().get("/")
+                .when().get("/space")
                 .then().statusCode(HttpStatus.OK.value());
     }
 
@@ -47,7 +47,7 @@ public class RestTests extends CleanDatabaseContainer {
         testUtils.parkOnAllSpaces();
 
         RestAssured
-                .when().get("/empty")
+                .when().get("/space/empty")
                 .then().statusCode(HttpStatus.NOT_FOUND.value())
                 .body("httpStatus", Matchers.notNullValue())
                 .body("message", Matchers.notNullValue())
