@@ -2,6 +2,8 @@ package com.tk.parkingapi.controller;
 
 import com.tk.parkingapi.dto.ParkingDTO;
 import com.tk.parkingapi.dto.VehicleDTO;
+import com.tk.parkingapi.entity.ParkingSpace;
+import com.tk.parkingapi.exception.GenericConflictException;
 import com.tk.parkingapi.mapper.ParkingDTOMapper;
 import com.tk.parkingapi.service.ParkingSpaceService;
 import io.swagger.annotations.Api;
@@ -45,13 +47,34 @@ public class ParkingController {
     public ResponseEntity<ParkingDTO> parkVehicle(@RequestBody VehicleDTO vehicleDTO) {
         val space = service.findOneEmpty();
 
+        val spaceDTO = parkVehicleAt(vehicleDTO, space);
+
+        return ResponseEntity.status(HttpStatus.OK).body(spaceDTO);
+
+    }
+
+    @ApiOperation("Park a vehicle in a specific space")
+    @PutMapping("/park/{id}")
+    public ResponseEntity<ParkingDTO> parkVehicle(@PathVariable int id, @RequestBody VehicleDTO vehicleDTO) {
+        val space = service.find(id);
+
+        val spaceDTO = parkVehicleAt(vehicleDTO, space);
+
+        return ResponseEntity.status(HttpStatus.OK).body(spaceDTO);
+    }
+
+    private ParkingDTO parkVehicleAt(VehicleDTO vehicleDTO, ParkingSpace space) {
         val vehicle = ParkingDTOMapper.dtoToVehicle(vehicleDTO);
+
+        if(space.getVehicle() != null) throw new GenericConflictException(
+                String.format("The space %s is already occupied by the car of plate %s", space.getId(), space.getVehicle().getPlate())
+        );
 
         space.setVehicle(vehicle);
         service.save(space);
 
         val spaceDTO = ParkingDTOMapper.parkingSpaceToDto(space);
-        return ResponseEntity.status(HttpStatus.OK).body(spaceDTO);
 
+        return spaceDTO;
     }
 }

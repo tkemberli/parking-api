@@ -42,7 +42,6 @@ public class VehicleFactory {
     }
 
     public Vehicle build(){
-        String id = getUUID();
 
         String state = getRandomAttribute("car.states");
         String plate = state + "-" + getUUID().substring(0, 12);

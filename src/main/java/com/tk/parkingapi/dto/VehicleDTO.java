@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public class VehicleDTO {
+    private String plate;
     private String model;
     private String color;
     private String ownerId;

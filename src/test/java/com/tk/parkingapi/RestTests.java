@@ -1,6 +1,7 @@
 package com.tk.parkingapi;
 
 import com.tk.parkingapi.containers.CleanDatabaseContainer;
+import com.tk.parkingapi.dto.VehicleDTO;
 import com.tk.parkingapi.factory.VehicleFactory;
 import com.tk.parkingapi.mapper.ParkingDTOMapper;
 import io.restassured.RestAssured;
@@ -58,8 +59,7 @@ public class RestTests extends CleanDatabaseContainer {
     public void whenParkingWithoutEmptySpacesShouldThrowException(){
         testUtils.parkOnAllSpaces();
 
-        val vehicle = factory.build();
-        val vehicleDTO = ParkingDTOMapper.vehicleToDTO(vehicle);
+        val vehicleDTO = getVehicleDTO();
 
         RestAssured.given()
                         .when().contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -68,5 +68,26 @@ public class RestTests extends CleanDatabaseContainer {
 
 
         testUtils.unParkAllVehicles();
+    }
+
+    @Test
+    public void whenParkingAtAFullSpaceShouldThrowException(){
+        testUtils.parkOnAllSpaces();
+
+        val vehicleDTO = getVehicleDTO();
+
+        RestAssured.given()
+                        .when().contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .body(vehicleDTO).put("/park/1")
+                        .then().statusCode(HttpStatus.CONFLICT.value());
+
+        testUtils.unParkAllVehicles();
+    }
+
+    private VehicleDTO getVehicleDTO(){
+        val vehicle = factory.build();
+        val vehicleDTO = ParkingDTOMapper.vehicleToDTO(vehicle);
+
+        return vehicleDTO;
     }
 }
