@@ -43,6 +43,24 @@ public class ParkingController {
         return ResponseEntity.ok(dtoList);
     }
 
+    @ApiOperation("Get a specific parking space by space ID")
+    @GetMapping("/{id}")
+    public ResponseEntity<ParkingDTO> findById(@PathVariable int id){
+        val space = service.find(id);
+        val spaceDTO = ParkingDTOMapper.parkingSpaceToDto(space);
+
+        return ResponseEntity.ok(spaceDTO);
+    }
+
+    @ApiOperation("Get a specific parking space by car plate")
+    @GetMapping("/vehicle/{plate}")
+    public ResponseEntity<ParkingDTO> findByVehiclePlate(@PathVariable String plate){
+        val space = service.findByParkedVehiclePlate(plate);
+        val spaceDTO = ParkingDTOMapper.parkingSpaceToDto(space);
+
+        return ResponseEntity.ok(spaceDTO);
+    }
+
     @ApiOperation("Park a vehicle in any empty space")
     @PutMapping("/park")
     public ResponseEntity<ParkingDTO> parkVehicle(@RequestBody VehicleDTO vehicleDTO) {
