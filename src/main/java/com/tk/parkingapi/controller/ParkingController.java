@@ -2,10 +2,12 @@ package com.tk.parkingapi.controller;
 
 import com.tk.parkingapi.dto.ParkingDTO;
 import com.tk.parkingapi.dto.VehicleDTO;
+import com.tk.parkingapi.entity.ParkingHistory;
 import com.tk.parkingapi.entity.ParkingSpace;
 import com.tk.parkingapi.exception.GenericConflictException;
 import com.tk.parkingapi.exception.GenericNotFoundException;
 import com.tk.parkingapi.mapper.ParkingDTOMapper;
+import com.tk.parkingapi.service.ParkingHistoryService;
 import com.tk.parkingapi.service.ParkingSpaceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,12 +25,23 @@ import java.util.List;
 @Api("Parking API")
 public class ParkingController {
 
-    private final ParkingSpaceService service;
+    private final ParkingSpaceService parkingService;
+    private final ParkingHistoryService historyService;
+
+
+    // TODO: Return a DTO instead?
+    @ApiOperation("Shows the parking history")
+    @GetMapping("/")
+    public ResponseEntity<List<ParkingHistory>> findAllHistory(){
+        val list = historyService.findAll();
+
+        return ResponseEntity.ok(list);
+    }
 
     @ApiOperation("Get all parking spaces")
     @GetMapping("/space")
     public ResponseEntity<List<ParkingDTO>> findAll(){
-        val list = service.findAll();
+        val list = parkingService.findAll();
         val dtoList = ParkingDTOMapper.parkingSpaceToDto(list);
 
         return ResponseEntity.ok(dtoList);
@@ -37,7 +50,7 @@ public class ParkingController {
     @ApiOperation("Get all empty parking spaces")
     @GetMapping("/space/empty")
     public ResponseEntity<List<ParkingDTO>> findAllEmpty(){
-        val list = service.findAllEmpty();
+        val list = parkingService.findAllEmpty();
         val dtoList = ParkingDTOMapper.parkingSpaceToDto(list);
 
         return ResponseEntity.ok(dtoList);
@@ -46,7 +59,7 @@ public class ParkingController {
     @ApiOperation("Get a specific parking space by space ID")
     @GetMapping("/space/{spaceId}")
     public ResponseEntity<ParkingDTO> findById(@PathVariable int spaceId){
-        val space = service.find(spaceId);
+        val space = parkingService.find(spaceId);
         val spaceDTO = ParkingDTOMapper.parkingSpaceToDto(space);
 
         return ResponseEntity.ok(spaceDTO);
@@ -55,7 +68,7 @@ public class ParkingController {
     @ApiOperation("Get a specific parking space by car plate")
     @GetMapping("/vehicle/{plate}")
     public ResponseEntity<ParkingDTO> findByVehiclePlate(@PathVariable String plate){
-        val space = service.findByParkedVehiclePlate(plate);
+        val space = parkingService.findByParkedVehiclePlate(plate);
         val spaceDTO = ParkingDTOMapper.parkingSpaceToDto(space);
 
         return ResponseEntity.ok(spaceDTO);
@@ -64,7 +77,7 @@ public class ParkingController {
     @ApiOperation("Park a vehicle in any empty space")
     @PutMapping("/park")
     public ResponseEntity<ParkingDTO> parkVehicle(@RequestBody VehicleDTO vehicleDTO) {
-        val space = service.findOneEmpty();
+        val space = parkingService.findOneEmpty();
 
         val spaceDTO = parkVehicleAt(vehicleDTO, space);
 
@@ -75,7 +88,7 @@ public class ParkingController {
     @ApiOperation("Park a vehicle in a specific space")
     @PutMapping("/park/{id}")
     public ResponseEntity<ParkingDTO> parkVehicle(@PathVariable int id, @RequestBody VehicleDTO vehicleDTO) {
-        val space = service.find(id);
+        val space = parkingService.find(id);
 
         val spaceDTO = parkVehicleAt(vehicleDTO, space);
 
@@ -85,7 +98,7 @@ public class ParkingController {
     @ApiOperation("Unpark a vehicle from a space, by space ID")
     @PatchMapping("/unpark/{spaceId}")
     public ResponseEntity<VehicleDTO> unparkVehicle(@PathVariable int spaceId) {
-        val space = service.find(spaceId);
+        val space = parkingService.find(spaceId);
 
         // TODO: Return an vehicle optional?
         val vehicle = space.getVehicle();
@@ -94,7 +107,7 @@ public class ParkingController {
 
         space.setVehicle(null);
 
-        service.save(space);
+        parkingService.save(space);
 
         val vehicleDTO = ParkingDTOMapper.vehicleToDTO(vehicle);
 
@@ -104,7 +117,7 @@ public class ParkingController {
     @ApiOperation("Unpark a vehicle from a space, by vehicle plate")
     @PatchMapping("/unpark/vehicle/{vehiclePlate}")
     public ResponseEntity<VehicleDTO> unParkVehicle(@PathVariable String vehiclePlate) {
-        val vehicle = service.unParkVehicle(vehiclePlate);
+        val vehicle = parkingService.unParkVehicle(vehiclePlate);
 
         val vehicleDTO = ParkingDTOMapper.vehicleToDTO(vehicle);
 
@@ -120,7 +133,7 @@ public class ParkingController {
         );
 
         space.setVehicle(vehicle);
-        service.save(space);
+        parkingService.save(space);
 
         val spaceDTO = ParkingDTOMapper.parkingSpaceToDto(space);
 
