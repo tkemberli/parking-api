@@ -72,7 +72,7 @@ public class ParkingSpaceService {
         val space = findByParkedVehiclePlate(vehiclePlate);
         return unParkVehicle(space);
     }
-
+    @Transactional
     private Vehicle unParkVehicle(ParkingSpace space){
         val vehicle = space.getVehicle();
         if(vehicle == null) throw new GenericNotFoundException("The space " + space.getId() + " is empty");
@@ -82,25 +82,13 @@ public class ParkingSpaceService {
 
         vehicle.setExitDate(LocalDateTime.now());
         val bill = billing.calculateBill(vehicle.getEntryDate(), vehicle.getExitDate());
+        System.out.println(vehicle.getExitDate());
+        System.out.println("bill :" + bill);
         vehicle.setBill(bill);
 
         return vehicle;
     }
 
-
-    private Vehicle unParkVehicle(ParkingSpace space, LocalDateTime date){
-        val vehicle = space.getVehicle();
-        if(vehicle == null) throw new GenericNotFoundException("The space " + space.getId() + " is empty");
-
-        space.setVehicle(null);
-        repository.save(space);
-
-        vehicle.setExitDate(date);
-        val bill = billing.calculateBill(vehicle.getEntryDate(), vehicle.getExitDate());
-        vehicle.setBill(bill);
-
-        return vehicle;
-    }
 
     @Transactional
     public ParkingSpace findByParkedVehiclePlate(String vehiclePlate){

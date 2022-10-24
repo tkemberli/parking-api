@@ -37,7 +37,7 @@ public class BillingService {
             if(timeDifference <= step) return timeDifference * hourlyRates.get(step);
         }
 
-        return 0.0d;
+        return timeDifference * hourlyRates.get(24);
     }
 }
 
