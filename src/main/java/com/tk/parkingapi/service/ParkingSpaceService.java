@@ -4,12 +4,14 @@ import com.tk.parkingapi.entity.ParkingSpace;
 import com.tk.parkingapi.entity.Vehicle;
 import com.tk.parkingapi.exception.*;
 import com.tk.parkingapi.repository.ParkingSpaceRepository;
+import com.tk.parkingapi.service.billing.BillingService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,6 +19,7 @@ import java.util.List;
 public class ParkingSpaceService {
 
     private final ParkingSpaceRepository repository;
+    private final BillingService billing;
 
     @Transactional
     public ParkingSpace find(int id){
@@ -58,30 +61,28 @@ public class ParkingSpaceService {
         return parkingSpace;
     }
 
-    // TODO: Calculate the bill
     // TODO: Save log
     @Transactional
     public Vehicle unParkVehicle(int parkingSpaceID){
         val space = find(parkingSpaceID);
-        val vehicle = space.getVehicle();
-
-        if(vehicle == null) throw new GenericNotFoundException("The space " + parkingSpaceID + " is empty");
-
-        space.setVehicle(null);
-        repository.save(space);
-
-        return vehicle;
-
+        return  unParkVehicle(space);
     }
-    // TODO: DRY
+    @Transactional
     public Vehicle unParkVehicle(String vehiclePlate) {
         val space = findByParkedVehiclePlate(vehiclePlate);
-        val vehicle = space.getVehicle();
+        return unParkVehicle(space);
+    }
 
+    private Vehicle unParkVehicle(ParkingSpace space){
+        val vehicle = space.getVehicle();
         if(vehicle == null) throw new GenericNotFoundException("The space " + space.getId() + " is empty");
 
         space.setVehicle(null);
         repository.save(space);
+
+        vehicle.setExitDate(LocalDateTime.now());
+        val bill = billing.calculateBill(vehicle.getEntryDate(), vehicle.getExitDate());
+        vehicle.setBill(bill);
 
         return vehicle;
     }
