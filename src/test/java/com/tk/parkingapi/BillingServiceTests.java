@@ -1,6 +1,8 @@
 package com.tk.parkingapi;
 
 
+import com.tk.parkingapi.factory.VehicleFactory;
+import com.tk.parkingapi.service.ParkingSpaceService;
 import com.tk.parkingapi.service.billing.BillingService;
 import lombok.val;
 import org.junit.jupiter.api.Assertions;
@@ -15,6 +17,9 @@ public class BillingServiceTests {
 
     @Autowired
     private  BillingService billingService;
+
+    @Autowired
+    private ParkingSpaceService parkingSpaceService;
 
 
     // TODO: soft-code?

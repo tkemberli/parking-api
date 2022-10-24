@@ -113,7 +113,7 @@ public class RestTests extends CleanDatabaseContainer {
                 .then().statusCode(HttpStatus.NOT_FOUND.value());
     }
 
-    // TODO: Maybe use a simpler way to consume endpoints?
+    // TODO: Maybe use OpenFeign to consume endpoints?
     @Test
     public void whenUnParkingParkedVehicleByPlateThenOk(){
         val vehicleDTO = getVehicleDTO();
