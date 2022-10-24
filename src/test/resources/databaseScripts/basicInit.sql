@@ -27,17 +27,6 @@ CREATE TABLE parking_history(
     bill DOUBLE NOT NULL
 );
 
-CREATE TABLE price(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    type VARCHAR(30) NOT NULL,
-    price DOUBLE NOT NULL
-);
-
-INSERT INTO price(type, price)
-    VALUES
-        ("hourly", 10.0),
-        ("hourly_additional_more_than_1", 5.0),
-        ("hourly_additional_more_than_5", 10.0);
 
 --  The script below runs fine on MySQl workbench, but can't run on this TestContainer MySQL database
 --  Haven't yet found a solution, so I will create the parking spaces manually
