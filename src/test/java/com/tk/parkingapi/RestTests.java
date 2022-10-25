@@ -38,6 +38,7 @@ public class RestTests extends CleanDatabaseContainer {
     @Test
     public void whenFindAllThenOk(){
         RestAssured
+                .given().auth().basic("admin", "admin")
                 .when().get("/space")
                 .then().statusCode(HttpStatus.OK.value());
     }
@@ -47,6 +48,7 @@ public class RestTests extends CleanDatabaseContainer {
         testUtils.parkOnAllSpaces();
 
         RestAssured
+                .given().auth().basic("admin", "admin")
                 .when().get("/space/empty")
                 .then().statusCode(HttpStatus.NOT_FOUND.value())
                 .body("httpStatus", Matchers.notNullValue())
@@ -62,7 +64,8 @@ public class RestTests extends CleanDatabaseContainer {
 
         val vehicleDTO = getVehicleDTO();
 
-        RestAssured.given()
+        RestAssured
+                    .given().auth().basic("admin", "admin")
                         .when().contentType(MediaType.APPLICATION_JSON_VALUE)
                         .body(vehicleDTO).put("/park")
                         .then().statusCode(HttpStatus.NOT_FOUND.value());
@@ -78,7 +81,8 @@ public class RestTests extends CleanDatabaseContainer {
 
         val vehicleDTO = getVehicleDTO();
 
-        RestAssured.given()
+        RestAssured
+                        .given().auth().basic("admin", "admin")
                         .when().contentType(MediaType.APPLICATION_JSON_VALUE)
                         .body(vehicleDTO).put("/park/1")
                         .then().statusCode(HttpStatus.CONFLICT.value());
@@ -90,7 +94,8 @@ public class RestTests extends CleanDatabaseContainer {
     public void whenUnParkingOnOccupiedSpaceThenOk(){
         testUtils.parkOnAllSpaces();
 
-            RestAssured.given()
+            RestAssured
+                            .given().auth().basic("admin", "admin")
                             .when().patch("unpark/1")
                             .then().statusCode(HttpStatus.OK.value());
 
@@ -99,7 +104,8 @@ public class RestTests extends CleanDatabaseContainer {
 
     @Test
     public void whenUnParkingOnEmptySpaceThenNotFound(){
-        RestAssured.given()
+        RestAssured
+                .given().auth().basic("admin", "admin")
                 .when().patch("unpark/1")
                 .then().statusCode(HttpStatus.NOT_FOUND.value());
     }
@@ -108,7 +114,8 @@ public class RestTests extends CleanDatabaseContainer {
     public void whenUnParkingNonParkedVehicleByPlateThenNotFound(){
         val vehiclePlate = factory.build().getPlate();
 
-        RestAssured.given()
+        RestAssured
+                .given().auth().basic("admin", "admin")
                 .when().patch("/unpark/vehicle/" + vehiclePlate)
                 .then().statusCode(HttpStatus.NOT_FOUND.value());
     }
@@ -118,12 +125,14 @@ public class RestTests extends CleanDatabaseContainer {
     public void whenUnParkingParkedVehicleByPlateThenOk(){
         val vehicleDTO = getVehicleDTO();
 
-        RestAssured.given()
+        RestAssured
+                .given().auth().basic("admin", "admin")
                 .when().contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(vehicleDTO).put("/park/1")
                 .then().statusCode(HttpStatus.OK.value());
 
-        RestAssured.given()
+        RestAssured
+                .given().auth().basic("admin", "admin")
                 .when().patch("/unpark/vehicle/" + vehicleDTO.getPlate())
                 .then().statusCode(HttpStatus.OK.value());
     }

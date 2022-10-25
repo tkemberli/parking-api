@@ -27,6 +27,18 @@ CREATE TABLE parking_history(
     bill DOUBLE NOT NULL
 );
 
+CREATE TABLE user(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	username VARCHAR(50) UNIQUE NOT NULL,
+	password BINARY(68) NOT NULL,
+    authority VARCHAR(50) NOT NULL,
+    enabled BOOLEAN NOT NULL
+);
+
+
+INSERT INTO user(username, password, authority, enabled)
+VALUES ("admin", "{bcrypt}$2a$12$LtV33fThQAShE6T38W0/z.G6Gi7.QsPI3lgIne7bKxQi6GNhwsq6m","ROLE_ADMIN", TRUE);
+
 
 --  The script below runs fine on MySQl workbench, but can't run on this TestContainer MySQL database
 --  Haven't yet found a solution, so I will create the parking spaces manually

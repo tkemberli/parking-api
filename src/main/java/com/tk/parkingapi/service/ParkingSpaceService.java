@@ -82,8 +82,6 @@ public class ParkingSpaceService {
 
         vehicle.setExitDate(LocalDateTime.now());
         val bill = billing.calculateBill(vehicle.getEntryDate(), vehicle.getExitDate());
-        System.out.println(vehicle.getExitDate());
-        System.out.println("bill :" + bill);
         vehicle.setBill(bill);
 
         return vehicle;
