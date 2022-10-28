@@ -10,10 +10,4 @@ public class ParkingApiApplication {
 		SpringApplication.run(ParkingApiApplication.class, args);
 	}
 
-//	@Bean
-//	CommandLineRunner commandLineRunner(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-//		return args -> {
-//			userRepository.save(new User("admin",passwordEncoder.encode("admin"),"ADMIN"));
-//		};
-//	}
 }

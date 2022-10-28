@@ -3,6 +3,7 @@ package com.tk.parkingapi;
 import com.tk.parkingapi.util.factory.VehicleFactory;
 import lombok.val;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,16 +12,16 @@ public class VehicleFactoryTests {
     private VehicleFactory factory;
 
     @BeforeEach
-    private void initialize(){
+    public void initialize(){
         factory = new VehicleFactory();
     }
 
     @Test
     public void shouldBuildWithAllProperties(){
         val car = factory.build();
-        Assert.assertNotNull(car.getPlate());
-        Assert.assertNotNull(car.getModel());
-        Assert.assertNotNull(car.getColor());
-        Assert.assertNotNull(car.getOwnerId());
+        Assertions.assertNotNull(car.getPlate());
+        Assertions.assertNotNull(car.getModel());
+        Assertions.assertNotNull(car.getColor());
+        Assertions.assertNotNull(car.getOwnerId());
     }
 }

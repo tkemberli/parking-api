@@ -67,7 +67,7 @@ public class ParkingSpaceServiceTests extends CleanDatabaseContainer {
                 .getVehicle()
                 .getPlate();
 
-        Assert.assertEquals(vehicle.getPlate(), parkedVehiclePlate);
+        Assertions.assertEquals(vehicle.getPlate(), parkedVehiclePlate);
 
     }
 
@@ -93,7 +93,7 @@ public class ParkingSpaceServiceTests extends CleanDatabaseContainer {
 
         val endingSpaceQty = parkingSpaceService.findAll().size();
 
-        Assert.assertEquals(initialSpaceQty, endingSpaceQty);
+        Assertions.assertEquals(initialSpaceQty, endingSpaceQty);
 
         testUtils.unParkAllVehicles();
     }

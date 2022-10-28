@@ -17,10 +17,6 @@ public class BillingServiceTests {
     @Autowired
     private  BillingService billingService;
 
-    @Autowired
-    private ParkingSpaceService parkingSpaceService;
-
-
     // TODO: soft-code?
     @Test
     public void oneHourShouldBe1(){

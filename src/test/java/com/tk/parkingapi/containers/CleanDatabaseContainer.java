@@ -5,12 +5,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-
 
 public class CleanDatabaseContainer {
 
-    private static MySQLContainer container = (MySQLContainer) new MySQLContainer("mysql:latest")
+    private static final MySQLContainer container = (MySQLContainer) new MySQLContainer("mysql:latest")
             .withInitScript("databaseScripts/basicInit.sql")
 //            .withUsername("test")
 //            .withPassword("test")

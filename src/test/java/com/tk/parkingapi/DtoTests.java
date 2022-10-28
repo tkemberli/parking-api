@@ -6,6 +6,7 @@ import com.tk.parkingapi.util.mapper.ParkingDTOMapper;
 import com.tk.parkingapi.service.model.ParkingSpaceService;
 import lombok.val;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,14 +29,14 @@ public class DtoTests extends CleanDatabaseContainer {
 
         System.out.println(dto);
 
-        Assert.assertEquals(space.getId(), dto.getId());
-        Assert.assertEquals(space.getVehicle().getPlate(), dto.getVehiclePlate());
-        Assert.assertEquals(space.getVehicle().getModel(), dto.getVehicleModel());
-        Assert.assertEquals(space.getVehicle().getColor(), dto.getVehicleColor());
-        Assert.assertEquals(space.getVehicle().getOwnerId(), dto.getVehicleOwnerId());
-        Assert.assertEquals(space.getVehicle().getEntryDate(), dto.getVehicleEntryDate());
-        Assert.assertEquals(space.getVehicle().getExitDate(), dto.getVehicleExitDate());
-        Assert.assertEquals(space.getVehicle().getBill(), dto.getVehicleBill());
+        Assertions.assertEquals(space.getId(), dto.getId());
+        Assertions.assertEquals(space.getVehicle().getPlate(), dto.getVehiclePlate());
+        Assertions.assertEquals(space.getVehicle().getModel(), dto.getVehicleModel());
+        Assertions.assertEquals(space.getVehicle().getColor(), dto.getVehicleColor());
+        Assertions.assertEquals(space.getVehicle().getOwnerId(), dto.getVehicleOwnerId());
+        Assertions.assertEquals(space.getVehicle().getEntryDate(), dto.getVehicleEntryDate());
+        Assertions.assertEquals(space.getVehicle().getExitDate(), dto.getVehicleExitDate());
+        Assertions.assertEquals(space.getVehicle().getBill(), dto.getVehicleBill());
     }
 
     @Test
@@ -43,6 +44,6 @@ public class DtoTests extends CleanDatabaseContainer {
         val space = service.findOneEmpty();
         val dto = ParkingDTOMapper.parkingSpaceToDto(space);
 
-        Assert.assertNull(dto.getVehicleModel());
+        Assertions.assertNull(dto.getVehicleModel());
     }
 }
