@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -76,28 +75,28 @@ public class ParkingController {
     }
 
     @ApiOperation("Park a vehicle in any empty space")
-    @PutMapping("/park")
+    @PutMapping("/")
     public ResponseEntity<ParkingDTO> parkVehicle(@RequestBody VehicleDTO vehicleDTO) {
-        val space = parkingService.findOneEmpty();
+        val vehicle = ParkingDTOMapper.dtoToVehicle(vehicleDTO);
 
-        val spaceDTO = parkVehicleAt(vehicleDTO, space);
+        val space = parkingService.parkVehicle(vehicle);
+        val spaceDTO = ParkingDTOMapper.parkingSpaceToDto(space);
 
-        return ResponseEntity.status(HttpStatus.OK).body(spaceDTO);
-
+        return ResponseEntity.ok(spaceDTO);
     }
 
     @ApiOperation("Park a vehicle in a specific space")
-    @PutMapping("/park/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ParkingDTO> parkVehicle(@PathVariable int id, @RequestBody VehicleDTO vehicleDTO) {
-        val space = parkingService.find(id);
+        val vehicle = ParkingDTOMapper.dtoToVehicle(vehicleDTO);
+        val space = parkingService.parkVehicleAt(vehicle, id);
+        val spaceDTO = ParkingDTOMapper.parkingSpaceToDto(space);
 
-        val spaceDTO = parkVehicleAt(vehicleDTO, space);
-
-        return ResponseEntity.status(HttpStatus.OK).body(spaceDTO);
+        return ResponseEntity.ok(spaceDTO);
     }
 
     @ApiOperation("Unpark a vehicle from a space, by space ID")
-    @PatchMapping("/unpark/{spaceId}")
+    @DeleteMapping("/{spaceId}")
     public ResponseEntity<VehicleDTO> unparkVehicle(@PathVariable int spaceId) {
         val space = parkingService.find(spaceId);
 
@@ -116,7 +115,7 @@ public class ParkingController {
     }
 
     @ApiOperation("Unpark a vehicle from a space, by vehicle plate")
-    @PatchMapping("/unpark/vehicle/{vehiclePlate}")
+    @DeleteMapping("/vehicle/{vehiclePlate}")
     public ResponseEntity<VehicleDTO> unParkVehicle(@PathVariable String vehiclePlate) {
         val vehicle = parkingService.unParkVehicle(vehiclePlate);
 
@@ -124,21 +123,4 @@ public class ParkingController {
 
         return ResponseEntity.status(HttpStatus.OK).body(vehicleDTO);
     }
-
-    // TODO: I may be confusing the controller and service responsibilities
-    private ParkingDTO parkVehicleAt(VehicleDTO vehicleDTO, ParkingSpace space) {
-        val vehicle = ParkingDTOMapper.dtoToVehicle(vehicleDTO);
-
-        if(space.getVehicle() != null) throw new GenericConflictException(
-                String.format("The space %s is already occupied by the car of plate %s", space.getId(), space.getVehicle().getPlate())
-        );
-
-        space.setVehicle(vehicle);
-        parkingService.save(space);
-
-        val spaceDTO = ParkingDTOMapper.parkingSpaceToDto(space);
-
-        return spaceDTO;
-    }
-
 }

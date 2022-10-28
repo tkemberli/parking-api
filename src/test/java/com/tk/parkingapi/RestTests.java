@@ -67,7 +67,7 @@ public class RestTests extends CleanDatabaseContainer {
         RestAssured
                     .given().auth().basic("admin", "admin")
                         .when().contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .body(vehicleDTO).put("/park")
+                        .body(vehicleDTO).put("/")
                         .then().statusCode(HttpStatus.NOT_FOUND.value());
 
 
@@ -84,7 +84,7 @@ public class RestTests extends CleanDatabaseContainer {
         RestAssured
                         .given().auth().basic("admin", "admin")
                         .when().contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .body(vehicleDTO).put("/park/1")
+                        .body(vehicleDTO).put("/1")
                         .then().statusCode(HttpStatus.CONFLICT.value());
 
         testUtils.unParkAllVehicles();
@@ -96,7 +96,7 @@ public class RestTests extends CleanDatabaseContainer {
 
             RestAssured
                             .given().auth().basic("admin", "admin")
-                            .when().patch("unpark/1")
+                            .when().delete("/1")
                             .then().statusCode(HttpStatus.OK.value());
 
         testUtils.unParkAllVehicles();
@@ -106,7 +106,7 @@ public class RestTests extends CleanDatabaseContainer {
     public void whenUnParkingOnEmptySpaceThenNotFound(){
         RestAssured
                 .given().auth().basic("admin", "admin")
-                .when().patch("unpark/1")
+                .when().delete("/1")
                 .then().statusCode(HttpStatus.NOT_FOUND.value());
     }
 
@@ -116,7 +116,7 @@ public class RestTests extends CleanDatabaseContainer {
 
         RestAssured
                 .given().auth().basic("admin", "admin")
-                .when().patch("/unpark/vehicle/" + vehiclePlate)
+                .when().delete("/vehicle/" + vehiclePlate)
                 .then().statusCode(HttpStatus.NOT_FOUND.value());
     }
 
@@ -128,12 +128,12 @@ public class RestTests extends CleanDatabaseContainer {
         RestAssured
                 .given().auth().basic("admin", "admin")
                 .when().contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(vehicleDTO).put("/park/1")
+                .body(vehicleDTO).put("/1")
                 .then().statusCode(HttpStatus.OK.value());
 
         RestAssured
                 .given().auth().basic("admin", "admin")
-                .when().patch("/unpark/vehicle/" + vehicleDTO.getPlate())
+                .when().delete("/vehicle/" + vehicleDTO.getPlate())
                 .then().statusCode(HttpStatus.OK.value());
     }
 

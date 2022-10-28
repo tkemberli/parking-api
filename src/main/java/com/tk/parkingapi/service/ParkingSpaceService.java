@@ -107,4 +107,16 @@ public class ParkingSpaceService {
 
         return space;
     }
+
+    @Transactional
+    public ParkingSpace parkVehicleAt(Vehicle vehicle, ParkingSpace space) {
+        if(space.getVehicle() != null) throw new GenericConflictException(
+                String.format("The space %s is already occupied by the car of plate %s", space.getId(), space.getVehicle().getPlate())
+        );
+
+        space.setVehicle(vehicle);
+        repository.save(space);
+
+        return space;
+    }
 }
