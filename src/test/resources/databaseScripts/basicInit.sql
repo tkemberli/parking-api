@@ -20,7 +20,6 @@ CREATE TABLE parking_space(
 
 CREATE TABLE parking_history(
     id INT PRIMARY KEY AUTO_INCREMENT,
-	parking_space_id INT NOT NULL,
     vehicle_plate VARCHAR(50) NOT NULL,
     entry_date DATETIME NOT NULL,
     exit_date DATETIME NOT NULL,

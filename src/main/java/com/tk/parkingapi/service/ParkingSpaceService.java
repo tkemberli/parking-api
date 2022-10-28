@@ -7,7 +7,6 @@ import com.tk.parkingapi.repository.ParkingSpaceRepository;
 import com.tk.parkingapi.service.billing.BillingService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

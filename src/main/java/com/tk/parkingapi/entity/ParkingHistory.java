@@ -11,15 +11,12 @@ import java.time.LocalDateTime;
 @Table(name = "parking_history")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class ParkingHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
-
-    @Column(name = "parking_space_id")
-    private int parkingSpaceId;
 
     @Column(name = "vehicle_plate")
     private String vehiclePlate;
@@ -32,4 +29,11 @@ public class ParkingHistory {
 
     @Column(name = "bill")
     private double bill;
+
+    public ParkingHistory(String vehiclePlate, LocalDateTime entryDate, LocalDateTime exitDate, double bill) {
+        this.vehiclePlate = vehiclePlate;
+        this.entryDate = entryDate;
+        this.exitDate = exitDate;
+        this.bill = bill;
+    }
 }
