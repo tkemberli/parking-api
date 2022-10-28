@@ -1,4 +1,4 @@
-package com.tk.parkingapi.factory;
+package com.tk.parkingapi.util.factory;
 
 import com.tk.parkingapi.ParkingApiApplication;
 import com.tk.parkingapi.entity.Vehicle;

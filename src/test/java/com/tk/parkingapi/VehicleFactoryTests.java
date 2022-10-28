@@ -1,6 +1,6 @@
 package com.tk.parkingapi;
 
-import com.tk.parkingapi.factory.VehicleFactory;
+import com.tk.parkingapi.util.factory.VehicleFactory;
 import lombok.val;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;

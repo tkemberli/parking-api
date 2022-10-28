@@ -1,7 +1,7 @@
 package com.tk.parkingapi;
 
-import com.tk.parkingapi.factory.VehicleFactory;
-import com.tk.parkingapi.service.ParkingSpaceService;
+import com.tk.parkingapi.util.factory.VehicleFactory;
+import com.tk.parkingapi.service.model.ParkingSpaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Component;

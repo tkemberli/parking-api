@@ -1,4 +1,4 @@
-package com.tk.parkingapi.service;
+package com.tk.parkingapi.service.model;
 
 import com.tk.parkingapi.entity.ParkingSpace;
 import com.tk.parkingapi.entity.Vehicle;
@@ -60,7 +60,6 @@ public class ParkingSpaceService {
         return parkingSpace;
     }
 
-    // TODO: Save log
     @Transactional
     public Vehicle unParkVehicle(int parkingSpaceID){
         val space = find(parkingSpaceID);

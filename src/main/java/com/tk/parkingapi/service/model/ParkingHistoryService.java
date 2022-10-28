@@ -1,4 +1,4 @@
-package com.tk.parkingapi.service;
+package com.tk.parkingapi.service.model;
 
 import com.tk.parkingapi.entity.ParkingHistory;
 import com.tk.parkingapi.repository.ParkingHistoryRepository;

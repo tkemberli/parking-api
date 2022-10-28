@@ -1,10 +1,9 @@
 package com.tk.parkingapi;
 
 import com.tk.parkingapi.containers.CleanDatabaseContainer;
-import com.tk.parkingapi.exception.GenericNotFoundException;
-import com.tk.parkingapi.factory.VehicleFactory;
+import com.tk.parkingapi.util.factory.VehicleFactory;
 import com.tk.parkingapi.repository.ParkingHistoryRepository;
-import com.tk.parkingapi.service.ParkingSpaceService;
+import com.tk.parkingapi.service.model.ParkingSpaceService;
 import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;

@@ -2,13 +2,11 @@ package com.tk.parkingapi;
 
 import com.tk.parkingapi.containers.CleanDatabaseContainer;
 import com.tk.parkingapi.dto.VehicleDTO;
-import com.tk.parkingapi.factory.VehicleFactory;
-import com.tk.parkingapi.mapper.ParkingDTOMapper;
+import com.tk.parkingapi.util.factory.VehicleFactory;
+import com.tk.parkingapi.util.mapper.ParkingDTOMapper;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import lombok.val;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

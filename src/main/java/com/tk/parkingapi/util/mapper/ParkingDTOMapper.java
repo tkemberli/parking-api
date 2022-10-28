@@ -1,4 +1,4 @@
-package com.tk.parkingapi.mapper;
+package com.tk.parkingapi.util.mapper;
 
 import com.tk.parkingapi.dto.ParkingDTO;
 import com.tk.parkingapi.dto.VehicleDTO;

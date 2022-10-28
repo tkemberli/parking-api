@@ -19,7 +19,7 @@ public class LoggingAspect {
 
     private final ParkingHistoryRepository repository;
 
-    @Pointcut("execution(* com.tk.parkingapi.service.ParkingSpaceService.unParkVehicle(*))")
+    @Pointcut("execution(* com.tk.parkingapi.service.model.ParkingSpaceService.unParkVehicle(*))")
     private void afterUnParkingVehiclePointcut(){}
 
     @AfterReturning(pointcut = "afterUnParkingVehiclePointcut()", returning = "vehicle")
