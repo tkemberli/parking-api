@@ -42,6 +42,14 @@ public class RestTests extends CleanDatabaseContainer {
     }
 
     @Test
+    public void whenFindHistoryThenOk(){
+        RestAssured
+                .given().auth().basic("admin", "admin")
+                .when().get("/")
+                .then().statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
     public void whenNoEmptySpacesShouldThrowException(){
         testUtils.parkOnAllSpaces();
 

@@ -23,12 +23,17 @@ public class ParkingHistoryTests extends CleanDatabaseContainer {
     @Autowired
     private VehicleFactory factory;
 
+    @Autowired
+    private TestUtils testUtils;
+
     @Test
     @Order(1)
     public void onExceptionNoLoggingShouldBeDone(){
 
         try{
-            service.unParkVehicle(1);
+            testUtils.unParkAllVehicles();              // Since the database container is reused between tests,
+            testUtils.clearParkingHistory();                // we have to clean the history here, in order to
+            service.unParkVehicle(1);           // test if no history is saved when an exception is thrown
         }catch (Exception e) {}
         finally {
             Assertions.assertTrue(repository.findAll().isEmpty());
@@ -36,6 +41,7 @@ public class ParkingHistoryTests extends CleanDatabaseContainer {
     }
 
     @Test
+    @Order(2)
     public void loggingAspectIsCorrectlyConfigured(){
         val vehicle = factory.build();
         service.parkVehicle(vehicle);
@@ -43,5 +49,4 @@ public class ParkingHistoryTests extends CleanDatabaseContainer {
 
         Assertions.assertFalse(repository.findAll().isEmpty());
     }
-
 }

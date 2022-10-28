@@ -1,5 +1,6 @@
 package com.tk.parkingapi;
 
+import com.tk.parkingapi.repository.ParkingHistoryRepository;
 import com.tk.parkingapi.util.factory.VehicleFactory;
 import com.tk.parkingapi.service.model.ParkingSpaceService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,8 @@ public class TestUtils {
 
     private final ParkingSpaceService service;
     private final VehicleFactory factory;
+
+    private final ParkingHistoryRepository history;
 
     public void unParkAllVehicles(){
         val spaces = service.findAll();
@@ -32,5 +35,9 @@ public class TestUtils {
             } catch (Exception exception){}
         });
 
+    }
+
+    public void clearParkingHistory(){
+        history.deleteAll();
     }
 }

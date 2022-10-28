@@ -10,10 +10,7 @@ public class CleanDatabaseContainer {
 
     private static final MySQLContainer container = (MySQLContainer) new MySQLContainer("mysql:latest")
             .withInitScript("databaseScripts/basicInit.sql")
-//            .withUsername("test")
-//            .withPassword("test")
             .withDatabaseName("parking")
-//            .withEnv("MYSQL_ROOT_PASSWORD", "test")
             .withReuse(true);
 
     @DynamicPropertySource
