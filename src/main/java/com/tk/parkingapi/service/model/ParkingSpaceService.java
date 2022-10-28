@@ -2,7 +2,8 @@ package com.tk.parkingapi.service.model;
 
 import com.tk.parkingapi.entity.ParkingSpace;
 import com.tk.parkingapi.entity.Vehicle;
-import com.tk.parkingapi.exception.*;
+import com.tk.parkingapi.exception.GenericConflictException;
+import com.tk.parkingapi.exception.GenericNotFoundException;
 import com.tk.parkingapi.repository.ParkingSpaceRepository;
 import com.tk.parkingapi.service.billing.BillingService;
 import lombok.RequiredArgsConstructor;

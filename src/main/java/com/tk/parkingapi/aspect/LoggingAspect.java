@@ -6,7 +6,6 @@ import com.tk.parkingapi.repository.ParkingHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;

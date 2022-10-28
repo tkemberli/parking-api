@@ -2,7 +2,6 @@ package com.tk.parkingapi.repository;
 
 import com.tk.parkingapi.entity.ParkingSpace;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
