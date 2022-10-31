@@ -1,4 +1,4 @@
---CREATE DATABASE parking;
+-- Database initializing script to be used by TestContainers
 
 USE parking;
 

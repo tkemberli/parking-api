@@ -9,10 +9,19 @@ import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Service for calculating the bill value when unparking a vehicle
+ */
+
 @Component
 public class BillingService {
     private final Map<Integer, Double> hourlyRates;
 
+    /**
+     * The constructor takes the prices from the configuration file
+     * @param hourlySteps describes in how many hours should the rate change
+     * @param hourlyValues describes hourly values per steps
+     */
     public BillingService(
             @Value("${billing.hourlySteps}") String hourlySteps,
             @Value("${billing.hourlyValues}") String hourlyValues) {

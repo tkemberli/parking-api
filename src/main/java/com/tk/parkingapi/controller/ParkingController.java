@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ *  Controller responsible for parking and unparking vehicles on spots
+ */
+
 @RestController
 @RequestMapping("/")
 @RequiredArgsConstructor

@@ -1,7 +1,5 @@
 package com.tk.parkingapi;
 
-
-import com.tk.parkingapi.service.model.ParkingSpaceService;
 import com.tk.parkingapi.service.billing.BillingService;
 import lombok.val;
 import org.junit.jupiter.api.Assertions;
@@ -10,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+
+/**
+ * Tests the {@link BillingService} ability to correctly calculate prices
+ */
 
 @SpringBootTest
 public class BillingServiceTests {

@@ -6,6 +6,10 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
 
+/**
+ * Initializes a clean database container to ensure testing purity
+ */
+
 public class CleanDatabaseContainer {
 
     private static final MySQLContainer container = (MySQLContainer) new MySQLContainer("mysql:latest")

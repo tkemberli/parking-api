@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Entity responsible for logging the history of parked vehicles to the databases
+ */
+
 @Entity
 @Table(name = "parking_history")
 @Data

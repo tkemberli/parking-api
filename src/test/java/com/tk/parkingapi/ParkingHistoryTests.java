@@ -11,6 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+/**
+ * Tests if after taking a vehicle out of a spot, the parking history is saved to the database
+ */
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ParkingHistoryTests extends CleanDatabaseContainer {
 
@@ -26,14 +30,18 @@ public class ParkingHistoryTests extends CleanDatabaseContainer {
     @Autowired
     private TestUtils testUtils;
 
+    /**
+     * Since the database container is reused between tests, we have to clean the history table here, in order to
+     * test if no history is saved when an exception is thrown
+     */
     @Test
     @Order(1)
     public void onExceptionNoLoggingShouldBeDone(){
 
         try{
-            testUtils.unParkAllVehicles();              // Since the database container is reused between tests,
-            testUtils.clearParkingHistory();                // we have to clean the history here, in order to
-            service.unParkVehicle(1);           // test if no history is saved when an exception is thrown
+            testUtils.unParkAllVehicles();
+            testUtils.clearParkingHistory();
+            service.unParkVehicle(1);
         }catch (Exception e) {}
         finally {
             Assertions.assertTrue(repository.findAll().isEmpty());

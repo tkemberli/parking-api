@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Component;
 
+/**
+ * Miscellaneous utilities for tests, like, parking vehicles on all spots
+ */
 @Component
 @RequiredArgsConstructor
 public class TestUtils {

@@ -11,6 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+/**
+ * Tests if {@link ParkingDTOMapper} is correctly mapping entities into its DTOs
+ */
+
 @SpringBootTest
 public class DtoTests extends CleanDatabaseContainer {
 

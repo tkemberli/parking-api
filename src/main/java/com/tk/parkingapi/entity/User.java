@@ -5,6 +5,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+/**
+ * A User entity to be queried from the database
+ * This entity is then used in the {@link SecurityUser} class in order to grant Spring Security privileges
+ */
+
 @Entity
 @Table(name = "user")
 @NoArgsConstructor

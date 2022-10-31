@@ -15,6 +15,8 @@ import java.util.concurrent.ThreadLocalRandom;
 * A factory that builds random Cars for testing purposes
  */
 
+// TODO: Move the attribute types to a Enum?
+
 @Component
 public class VehicleFactory {
 
@@ -66,6 +68,11 @@ public class VehicleFactory {
     }
 
 
+    /**
+     * Gets random attributes such as color or model from the attributes properties file
+     * @param attribute car.state, car.model or car.color (view TODO above)
+     * @return random attribute as String
+     */
     private String getRandomAttribute(String attribute){
         val attributes = this.attributes.getProperty(attribute).split(",");
         val attributesQty = attributes.length;

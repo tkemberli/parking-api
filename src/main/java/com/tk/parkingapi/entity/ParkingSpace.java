@@ -5,6 +5,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+/**
+ * Represents spaces where vehicles can be parkeds
+ */
+
 @Entity
 @Table(name = "parking_space")
 @Data

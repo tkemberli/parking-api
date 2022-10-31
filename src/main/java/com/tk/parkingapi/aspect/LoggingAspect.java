@@ -11,6 +11,11 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
+/**
+ *  Aspect responsible for logging all parkings
+ *  After a vehicle is taken out of a spot, its history is saved to the database
+ */
+
 @Aspect
 @Component
 @RequiredArgsConstructor

@@ -52,6 +52,12 @@ public class ParkingSpaceService {
         return findAllEmpty().get(0);
     }
 
+    /**
+     * Parks a {@link Vehicle} into the first found empty space. The {@link #findAllEmpty()} method for finding empty spaces
+     * will throw an exception if none exists
+     * @param vehicle
+     * @return occupied {@link ParkingSpace}
+     */
     @Transactional
     public ParkingSpace parkVehicle(Vehicle vehicle){
         val parkingSpace = findOneEmpty();

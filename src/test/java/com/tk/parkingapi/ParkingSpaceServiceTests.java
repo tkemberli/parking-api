@@ -12,6 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+/**
+ * Tests all the features in the {@link ParkingSpaceService}, such as parking vehicles, finding empty spaces, etc...
+ */
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ParkingSpaceServiceTests extends CleanDatabaseContainer {
 

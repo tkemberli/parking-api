@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
 
+/**
+ * This controller is a centralized exception handler <br>
+ * Our objective is to inform the frontend of exceptions through a Json response
+ */
+
 @ControllerAdvice
 public class ParkingExceptionHandler {
 

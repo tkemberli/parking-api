@@ -8,6 +8,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * User to be authenticated in Spring Security <br>
+ * An {@link User} entity must be first queried from the database and then configured in this class
+ */
+
 @RequiredArgsConstructor
 public class SecurityUser implements UserDetails {
 

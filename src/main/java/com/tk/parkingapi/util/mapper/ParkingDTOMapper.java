@@ -8,6 +8,10 @@ import org.modelmapper.ModelMapper;
 
 import java.util.List;
 
+/**
+ * Maps {@link ParkingSpace} and {@link Vehicle} entities into DTOs
+ */
+
 public abstract class ParkingDTOMapper {
     private static final ModelMapper MODEL_MAPPER = new ModelMapper();
     public static ParkingDTO parkingSpaceToDto(ParkingSpace parkingSpace){
